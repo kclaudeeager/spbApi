@@ -50,11 +50,11 @@ public class Translator extends AuditModel {
         return id;
     }
 
-    public String getenglishs() {
+    public String getenglish() {
         return englishs;
     }
 
-    public void setenglishs(String englishs) {
+    public void setenglish(String englishs) {
         this.englishs = englishs;
     }
 

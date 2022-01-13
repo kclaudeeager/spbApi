@@ -38,11 +38,35 @@ public class TranslatorController {
     return translatorRepository.findAll();
   }
 
-  @GetMapping("/translate/{id}")
-  public ResponseEntity<Translator> gettranslateById(HttpServletRequest request, @PathVariable(value = "id") Long id) {
+  @GetMapping("/translate/{variable}")
+  public ResponseEntity<Translator> gettranslateById(@PathVariable(value = "id") Long id) {
     Translator trans = translatorRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Translate  not found :: " + id));
     return ResponseEntity.ok().body(trans);
+  }
+
+  @DeleteMapping("/translate/{variable}")
+  public Map<String, Boolean> delettranslate(@PathVariable(value = "variable") Long variable) {
+    Translator trans = translatorRepository.findById(variable)
+        .orElseThrow(() -> new ResourceNotFoundException("variable not found :: " + variable));
+    translatorRepository.delete(trans);
+    Map<String, Boolean> response = new HashMap<>();
+    response.put("deleted", Boolean.TRUE);
+    return response;
+  }
+
+  @PutMapping("/translate{variable}")
+  public ResponseEntity<Translator> updatetranslate(@PathVariable(value = "variable") Long variable,
+      @RequestBody Translator transDetails) {
+    Translator trans = translatorRepository.findById(variable)
+        .orElseThrow(() -> new ResourceNotFoundException("translation not found :: " + variable));
+
+    trans.setfrench(transDetails.getfrench());
+    trans.setenglish(transDetails.getenglish());
+    trans.setswahili(transDetails.getswahili());
+    trans.setkinyrwanda(transDetails.getkinyrwanda());
+    final Translator updatedstranslation = translatorRepository.save(trans);
+    return ResponseEntity.ok(updatedstranslation);
   }
 
 }
