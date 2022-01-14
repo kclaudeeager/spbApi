@@ -23,10 +23,11 @@ public class demo {
         public void addCorsMappings(CorsRegistry registry) {
 
             registry.addMapping("/**").allowedOrigins("/**").allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
-                    .allowCredentials(true);
+                    .allowCredentials(false);
 
         }
 
     }
+
 
 }
